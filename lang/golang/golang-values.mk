@@ -129,14 +129,16 @@ go_arch=$(subst \
 
 GO_OS:=linux
 GO_ARCH:=$(call go_arch,$(ARCH))
-GO_OS_ARCH:=$(GO_OS)_$(GO_ARCH)
+
+GO_OS_ARCH=$(GO_OS)_$(GO_ARCH)
 
 GO_HOST_OS:=$(call tolower,$(HOST_OS))
 GO_HOST_ARCH:=$(call go_arch,$(subst \
   armv6l,arm,$(subst \
   armv7l,arm,$(subst \
   i686,i386,$(HOST_ARCH)))))
-GO_HOST_OS_ARCH:=$(GO_HOST_OS)_$(GO_HOST_ARCH)
+
+GO_HOST_OS_ARCH=$(GO_HOST_OS)_$(GO_HOST_ARCH)
 
 ifeq ($(GO_OS_ARCH),$(GO_HOST_OS_ARCH))
   GO_HOST_TARGET_SAME:=1

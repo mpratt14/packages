@@ -187,10 +187,22 @@ ifeq ($(BOOTSTRAP_ROOT_DIR),)
   Hooks/HostPrepare/Post+=Bootstrap/Prepare
 
   $(eval $(call GoCompiler/AddProfile,Bootstrap,$(BOOTSTRAP_BUILD_DIR),,bootstrap,$(GO_HOST_OS_ARCH)))
+else
+  ifeq ($(wildcard $(BOOTSTRAP_ROOT_DIR)/bin/go),)
+    $(error ERROR: external Go tree not found)
+  else
+    GO_EXT_ARCH:=$(lastword $(subst /, ,$(shell $(BOOTSTRAP_ROOT_DIR)/bin/go version)))
+  endif
 endif
 
 
 # Host
+
+ifdef CONFIG_GOLANG_EXTERNAL_BOOTSTRAP_ARCH
+  ifneq ($(GO_EXT_ARCH),)
+    GO_HOST_ARCH:=$(GO_EXT_ARCH)
+  endif
+endif
 
 ifeq ($(GO_HOST_PIE_SUPPORTED),1)
   HOST_GO_ENABLE_PIE:=1
@@ -202,6 +214,7 @@ endif
 $(eval $(call GoCompiler/AddProfile,Host,$(HOST_BUILD_DIR),$(HOST_GO_PREFIX),$(HOST_GO_VERSION_ID),$(GO_HOST_OS_ARCH),$(HOST_GO_INSTALL_SUFFIX)))
 
 HOST_GO_VARS= \
+	GOHOSTARCH="$(GO_HOST_ARCH)" \
 	GOCACHE="$(GO_BUILD_CACHE_DIR)" \
 	GOENV=off \
 	CC="$(HOSTCC_NOCACHE)" \
@@ -271,6 +284,7 @@ PKG_GO_ZBOOTSTRAP_MODS:= \
 PKG_GO_ZBOOTSTRAP_PATH:=$(PKG_BUILD_DIR)/src/internal/buildcfg/zbootstrap.go
 
 PKG_GO_VARS= \
+	GOHOSTARCH="$(GO_HOST_ARCH)" \
 	GOCACHE="$(GO_BUILD_CACHE_DIR)" \
 	GOENV=off \
 	GO_GCC_HELPER_PATH="$$$$PATH" \
