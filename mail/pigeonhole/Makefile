@@ -9,11 +9,14 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=dovecot-pigeonhole
 PKG_VERSION_PLUGIN:=0.5.18
-PKG_VERSION_DOVECOT:=$(shell make --no-print-directory -C ../dovecot/ val.PKG_VERSION V=s)
+
+DOVECOT_PATH:=$(TOPDIR)/feeds/packages/mail/dovecot
+PKG_VERSION_DOVECOT:=$(shell $(MAKE) --no-print-directory -C $(DOVECOT_PATH) val.PKG_VERSION V=s)
+
 PKG_VERSION:=$(PKG_VERSION_DOVECOT)-$(PKG_VERSION_PLUGIN)
 PKG_RELEASE:=$(AUTORELEASE)
 
-DOVECOT_VERSION:=2.3
+DOVECOT_VERSION:=$(word 1, $(subst ., ,$(PKG_VERSION_DOVECOT))).$(word 2, $(subst ., ,$(PKG_VERSION_DOVECOT)))
 
 PKG_SOURCE:=dovecot-$(DOVECOT_VERSION)-pigeonhole-$(PKG_VERSION_PLUGIN).tar.gz
 PKG_SOURCE_URL:=https://pigeonhole.dovecot.org/releases/$(DOVECOT_VERSION)
