@@ -15,19 +15,31 @@ include $(GO_INCLUDE_DIR)/golang-values.mk
 # $(1) valid GOOS_GOARCH combinations
 # $(2) go version id
 define GoCompiler/Default/CheckHost
+  ifeq (bootstrap,$(2))
+    ifeq ($(BOOTSTRAP_EXT_DIR),)
+	$(if $(filter $(GO_HOST_OS_ARCH),$(1)),,$(error go-$(2) cross-compile requires external Go tree in config))
+#    else
+#	$(if $(filter $(GO_HOST_OS_ARCH),$(1)),,$(warning go-$(2) will be cross-compiled...))
+    endif
+  else
 	$(if $(filter $(GO_HOST_OS_ARCH),$(1)),,$(error go-$(2) cannot be installed on $(GO_HOST_OS)/$(GO_HOST_ARCH)))
+  endif
 endef
 
 # $(1) source go root
 # $(2) destination prefix
 # $(3) go version id
 # $(4) additional environment variables (optional)
+# $(5) profile name
 define GoCompiler/Default/Make
 	( \
 		cd "$(1)/src" ; \
 		$(if $(2),GOROOT_FINAL="$(2)/lib/go-$(3)") \
 		$(4) \
-		$(BASH) make.bash --no-banner ; \
+		$(BASH) \
+		$(if $(filter Bootstrap-cross,$(5)),bootstrap.bash,make.bash) \
+		--no-banner \
+		; \
 	)
 endef
 
@@ -150,7 +162,7 @@ define GoCompiler/AddProfile
 
   # $$(1) additional environment variables (optional)
   define GoCompiler/$(1)/Make
-	$$(call GoCompiler/Default/Make,$(2),$(3),$(4),$$(1))
+	$$(call GoCompiler/Default/Make,$(2),$(3),$(4),$$(1),$(1))
   endef
 
   # $$(1) override install prefix (optional)

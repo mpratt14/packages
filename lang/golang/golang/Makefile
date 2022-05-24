@@ -168,9 +168,9 @@ endef
 
 # Bootstrap
 
-BOOTSTRAP_ROOT_DIR:=$(call qstrip,$(CONFIG_GOLANG_EXTERNAL_BOOTSTRAP_ROOT))
+BOOTSTRAP_EXT_DIR:=$(call qstrip,$(CONFIG_GOLANG_EXTERNAL_BOOTSTRAP_ROOT))
 
-ifeq ($(BOOTSTRAP_ROOT_DIR),)
+ifeq ($(BOOTSTRAP_EXT_DIR),)
   BOOTSTRAP_ROOT_DIR:=$(BOOTSTRAP_BUILD_DIR)
 
   define Download/golang-bootstrap
@@ -187,6 +187,24 @@ ifeq ($(BOOTSTRAP_ROOT_DIR),)
   Hooks/HostPrepare/Post+=Bootstrap/Prepare
 
   $(eval $(call GoCompiler/AddProfile,Bootstrap,$(BOOTSTRAP_BUILD_DIR),,bootstrap,$(GO_HOST_OS_ARCH)))
+else
+  BOOTSTRAP_ROOT_DIR:=$(BOOTSTRAP_EXT_DIR)
+
+  ifeq ($(wildcard $(BOOTSTRAP_EXT_DIR)/bin/go),)
+    $(error ERROR: external Go tree not found)
+  else
+    GO_EXT_ARCH:=$(lastword $(subst /, ,$(shell $(BOOTSTRAP_EXT_DIR)/bin/go version)))
+    ifneq ($(GO_HOST_ARCH),$(GO_EXT_ARCH))
+      $(warning ERROR: Archs DO NOT match)
+      ifneq ($(GO_EXT_ARCH),)
+        $(eval $(call GoCompiler/AddProfile,Bootstrap-cross,$(HOST_BUILD_DIR),,bootstrap,$(GO_HOST_OS_ARCH)))
+        BOOTSTRAP_ROOT_DIR:=$(HOST_BUILD_DIR)/../../go-$(GO_HOST_OS)-$(GO_HOST_ARCH)-bootstrap
+      endif
+    else
+      $(warning ERROR: Archs match)
+    endif
+  endif
+
 endif
 
 
@@ -215,6 +233,12 @@ define Host/Compile
 
 	$(call GoCompiler/Bootstrap/Make, \
 		$(HOST_GO_VARS) \
+	)
+
+	$(call GoCompiler/Bootstrap-cross/Make, \
+		GOOS="$(GO_HOST_OS)" \
+		GOARCH="$(GO_HOST_ARCH)" \
+		GOHOSTARCH="$(GO_EXT_ARCH)" \
 	)
 
 	$(call GoCompiler/Host/Make, \
