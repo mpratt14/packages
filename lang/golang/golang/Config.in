@@ -12,6 +12,18 @@ config GOLANG_EXTERNAL_BOOTSTRAP_ROOT
 
 	  Leave blank to compile the default bootstrap Go.
 
+config GOLANG_FORCE_ARCH
+	string "Force select arch for host compile"
+	default ""
+	help
+	  Normally the arch is automatically selected to match the kernel
+	  Use this option if your userspace programs differ in arch
+
+	  For example, a system running a 64 bit kernel
+	  with 32 bit userspace programs
+
+	  Leave blank to automatically detect arch from uname
+
 config GOLANG_BUILD_CACHE_DIR
 	string "Go build cache directory"
 	default ""
