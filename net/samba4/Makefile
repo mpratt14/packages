@@ -317,10 +317,10 @@ HOST_CONFIGURE_VARS+= \
 CONFIGURE_VARS += \
 	PATH="$(STAGING_DIR_HOSTPKG)/bin:$(STAGING_DIR_HOSTPKG)/usr/bin:$(PATH)"
 
-# we need hostpkg bin and target config	
+# we need hostpkg bin and target config
 ifeq ($(CONFIG_SAMBA4_SERVER_AD_DC),y)
 	CONFIGURE_VARS += \
-		PYTHON_CONFIG="$(STAGING_DIR)/host/bin/$(PYTHON3)-config"
+		PYTHON_CONFIG="$(STAGING_DIR_HOSTPKG)/bin/$(PYTHON3)-config"
 endif
 
 # we dont need GnuTLS for the host helpers
