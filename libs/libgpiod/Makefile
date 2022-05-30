@@ -34,8 +34,8 @@ ifneq ($(CONFIG_PACKAGE_python3-gpiod),)
 CONFIGURE_ARGS += --enable-bindings-python
 CONFIGURE_VARS += \
 	PYTHON="$(STAGING_DIR_HOSTPKG)/bin/$(PYTHON3)" \
-	PYTHON_CPPFLAGS="$(shell $(STAGING_DIR)/host/bin/$(PYTHON3)-config --includes)" \
-	PYTHON_LIBS="$(shell $(STAGING_DIR)/host/bin/$(PYTHON3)-config --libs)"
+	PYTHON_CPPFLAGS="$(shell $(STAGING_DIR_HOSTPKG)/bin/$(PYTHON3)-config --includes)" \
+	PYTHON_LIBS="$(shell $(STAGING_DIR_HOSTPKG)/bin/$(PYTHON3)-config --libs)"
 endif
 
 define Package/libgpiod
