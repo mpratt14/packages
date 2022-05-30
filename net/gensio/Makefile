@@ -58,8 +58,8 @@ CONFIGURE_ARGS += \
 	--with-pythoninstall=$(PYTHON3_PKG_DIR)
 
 CONFIGURE_VARS += \
-	PYTHON_LIBS="$(shell $(STAGING_DIR)/host/bin/$(PYTHON3)-config --ldflags) -l${PYTHON3}" \
-	PYTHON_CPPFLAGS="$(shell $(STAGING_DIR)/host/bin/$(PYTHON3)-config --includes)" \
+	PYTHON_LIBS="$(shell $(STAGING_DIR_HOSTPKG)/bin/$(PYTHON3)-config --ldflags) -l${PYTHON3}" \
+	PYTHON_CPPFLAGS="$(shell $(STAGING_DIR_HOSTPKG)/bin/$(PYTHON3)-config --includes)" \
 	PYTHON="$(STAGING_DIR_HOSTPKG)/bin/$(PYTHON3)"
 else
 CONFIGURE_ARGS += \
