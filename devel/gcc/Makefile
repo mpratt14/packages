@@ -46,6 +46,10 @@ ifeq ($(PKG_VERSION),11.3.0)
 	PKG_HASH:=b47cf2818691f5b1e21df2bb38c795fac2cfbd640ede2d0a5e1c89e338a3ac39
 endif
 
+ifeq ($(PKG_VERSION),11.3.0)
+	PKG_HASH:=b47cf2818691f5b1e21df2bb38c795fac2cfbd640ede2d0a5e1c89e338a3ac39
+endif
+
 PATCH_DIR=./patches/$(GCC_VERSION)
 
 include $(INCLUDE_DIR)/package.mk
