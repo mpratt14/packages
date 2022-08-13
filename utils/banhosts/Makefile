@@ -29,7 +29,7 @@ List of domains serving advertising and malicious content to easily block them
 endef
 
 
-define Build/Compile/Default
+define Build/Compile
 endef
 
 define Package/banhostlist/install
