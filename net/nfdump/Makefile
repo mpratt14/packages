@@ -26,7 +26,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/nfdump
   SECTION:=net
   CATEGORY:=Network
-  DEPENDS:= +libbz2 +USE_MUSL:musl-fts
+  DEPENDS:= +flex +libbz2 +USE_MUSL:musl-fts
   TITLE:= nfdump
   URL:=https://github.com/phaag/nfdump/
 endef
@@ -40,7 +40,9 @@ define Package/nfdump/conffiles
 endef
 
 TARGET_CFLAGS += -flto
+
 TARGET_LDFLAGS += -Wl,--as-needed $(if $(CONFIG_USE_MUSL),-lfts)
+TARGET_LDFLAGS += -L$(STAGING_DIR)/usr/lib
 
 define Package/nfdump/install
 	$(INSTALL_DIR) $(1)/usr/lib
