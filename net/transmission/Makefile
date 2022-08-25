@@ -91,6 +91,7 @@ TARGET_CFLAGS += -ffunction-sections -fdata-sections -flto
 TARGET_LDFLAGS += -Wl,--gc-sections -Wl,--as-needed
 
 CONFIGURE_ARGS += \
+	--disable-dependency-tracking \
 	--enable-cli \
 	--enable-daemon \
 	--enable-external-natpmp \
