@@ -1,3 +1,19 @@
+From 5fd2568c34a8d5c8159d9a5e0f5601f9e8902166
+From: Graham Leggett <minfrin@apache.org>
+Date: Tue, 10 Mar 2020 22:38:59 +0000
+Subject: [PATCH] APR's configure script uses AC_TRY_RUN to detect whether the
+ return type of strerror_r is int. When cross-compiling this defaults to no.
+
+This commit adds an AC_CACHE_CHECK so users who cross-compile APR may
+influence the outcome with a configure variable.
+
+
+git-svn-id: https://svn.apache.org/repos/asf/apr/apr/trunk@1875065 13f79535-47bb-0310-9956-ffa450edef68
+---
+ CHANGES             |  7 +++++++ (OPENWRT REMOVED)
+ build/apr_common.m4 | 11 ++++-------
+ 2 files changed, 11 insertions(+), 7 deletions(-)
+
 --- a/build/apr_common.m4
 +++ b/build/apr_common.m4
 @@ -526,8 +526,9 @@ dnl  string.
