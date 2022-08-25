@@ -1,6 +1,6 @@
 --- a/build/apr_common.m4
 +++ b/build/apr_common.m4
-@@ -526,8 +526,9 @@ dnl  string.
+@@ -492,8 +492,9 @@ dnl  string.
  dnl
  dnl
  AC_DEFUN([APR_CHECK_STRERROR_R_RC], [
@@ -12,7 +12,7 @@
  #include <errno.h>
  #include <string.h>
  #include <stdio.h>
-@@ -543,14 +544,10 @@ main()
+@@ -512,14 +513,10 @@ main()
  }], [
      ac_cv_strerror_r_rc_int=yes ], [
      ac_cv_strerror_r_rc_int=no ], [

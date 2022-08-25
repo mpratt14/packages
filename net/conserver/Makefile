@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=conserver
 PKG_VERSION:=8.2.6
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/conserver/conserver/tar.gz/v$(PKG_VERSION)?
@@ -60,12 +60,6 @@ CONFIGURE_ARGS += \
 	--sysconfdir=/etc/conserver \
 	--with-port=3109 \
 	--with-logfile=/var/log/conserver/server.log
-
-define Build/Prepare
-	$(call Build/Prepare/Default)
-	$(CP) ./files/config.sub $(PKG_BUILD_DIR)/
-	$(CP) ./files/config.guess $(PKG_BUILD_DIR)/
-endef
 
 define Package/conserver/install
 	$(INSTALL_DIR) $(1)/usr/sbin
