@@ -59,6 +59,7 @@ S.A.N.E backend for HP Scanners
 endef
 
 CONFIGURE_ARGS += \
+	--disable-dependency-tracking \
 	--disable-gui-build \
 	--disable-network-build \
 	--disable-fax-build \
