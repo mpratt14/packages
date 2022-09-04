@@ -46,6 +46,7 @@ HOST_CONFIGURE_ARGS += \
 		-test-/bug-5832 \
 		-test-/bug_reporter \
 		-test-/class \
+		-test-/cxxanyargs \
 		-test-/debug \
 		-test-/dln/empty \
 		-test-/exception \
@@ -63,6 +64,7 @@ HOST_CONFIGURE_ARGS += \
 		-test-/marshal/internal_ivar \
 		-test-/marshal/usr \
 		-test-/memory_status \
+		-test-/memory_view \
 		-test-/method \
 		-test-/notimplement \
 		-test-/num2int \
@@ -73,6 +75,8 @@ HOST_CONFIGURE_ARGS += \
 		-test-/proc \
 		-test-/rational \
 		-test-/recursion \
+		-test-/regexp \
+		-test-/RUBY_ALIGNOF \
 		-test-/st/foreach \
 		-test-/st/numhash \
 		-test-/st/update \
@@ -91,10 +95,12 @@ HOST_CONFIGURE_ARGS += \
 		cgi/escape \
 		continuation \
 		coverage \
+		digest/sha1 \
 		etc \
 		fcntl \
 		fiddle \
 		io/console \
+		io/wait \
 		json \
 		json/generator \
 		json/parser \
