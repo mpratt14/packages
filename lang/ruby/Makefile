@@ -73,6 +73,7 @@ HOST_CONFIGURE_ARGS += \
 		-test-/postponed_job \
 		-test-/printf \
 		-test-/proc \
+		-test-/random \
 		-test-/rational \
 		-test-/recursion \
 		-test-/regexp \
@@ -96,10 +97,15 @@ HOST_CONFIGURE_ARGS += \
 		continuation \
 		coverage \
 		digest/sha1 \
+		digest/md5 \
+		digest/rmd160 \
+		digest/sha1 \
+		digest/sha2 \
 		etc \
 		fcntl \
 		fiddle \
 		io/console \
+		io/nonblock \
 		io/wait \
 		json \
 		json/generator \
@@ -139,6 +145,22 @@ CONFIGURE_ARGS += \
 	--with-ruby-version=minor \
 	--with-iconv-dir=$(ICONV_PREFIX) \
 	--with-out-ext=$(subst $(space),$(comma),$(strip \
+		-test-/arith_seq/extract \
+		-test-/array/concat \
+		-test-/bignum \
+		-test-/class \
+		-test-/cxxanyargs \
+		-test-/debug \
+		-test-/enumerator_kw \
+		-test-/file \
+		-test-/float \
+		-test-/iter \
+		-test-/memory_view \
+		-test-/method \
+		-test-/proc \
+		-test-/regexp \
+		-test-/symbol \
+		digest/sha2 \
 		win32 \
 		win32ole \
 	))
