@@ -22,6 +22,7 @@ PKG_CPE_ID:=cpe:/a:gnome:glib
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/glib-$(PKG_VERSION)
 HOST_BUILD_DIR:=$(BUILD_DIR_HOST)/glib-$(PKG_VERSION)
+HOST_BUILD_DEPENDS:=libffi/host pcre/host pcre2/host
 PKG_CONFIG_DEPENDS:=CONFIG_BUILD_NLS
 PKG_FORTIFY_SOURCE:=0
 
@@ -63,7 +64,7 @@ COMP_ARGS= \
 	-Dglib_checks=true \
 	-Dlibelf=disabled
 
-MESON_HOST_ARGS += $(COMP_ARGS) -Dxattr=false -Ddefault_library=static -Dnls=disabled -Dwrap_mode=forcefallback
+MESON_HOST_ARGS += $(COMP_ARGS) -Dxattr=false -Ddefault_library=static -Dnls=disabled
 MESON_ARGS += $(COMP_ARGS) -Dxattr=true -Db_lto=true -Ddefault_library=both -Dnls=$(if $(CONFIG_BUILD_NLS),en,dis)abled
 
 define Build/InstallDev
